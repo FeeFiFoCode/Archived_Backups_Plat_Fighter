@@ -1,0 +1,72 @@
+[gd_scene load_steps=40 format=3 uid="uid://cmgw4nva8ve7j"]
+
+[ext_resource type="Script" path="res://Entities/Characters/Capsule.gd" id="1_vopft"]
+[ext_resource type="Script" path="res://Entities/Characters/CapsuleStats.gd" id="2_7qv3g"]
+[ext_resource type="Script" path="res://Scripts/Movement/Helpers/StateMachine.gd" id="2_wsp71"]
+[ext_resource type="Script" path="res://Scripts/Movement/Helpers/State.gd" id="3_ujxfg"]
+[ext_resource type="Script" path="res://Scripts/Movement/States/Idle.gd" id="4_2mw8s"]
+[ext_resource type="Script" path="res://Scripts/Movement/States/JumpSquat.gd" id="5_ew7b7"]
+[ext_resource type="Script" path="res://Entities/Characters/Squat.gd" id="6_nbw4d"]
+[ext_resource type="Script" path="res://Scripts/Movement/Metas/MetaWalk.gd" id="6_vvanq"]
+[ext_resource type="Script" path="res://Scripts/Movement/States/WalkSlow.gd" id="8_7lsjf"]
+[ext_resource type="Script" path="res://Scripts/Movement/Patterns/PatternWalk.gd" id="8_l0ywh"]
+[ext_resource type="Script" path="res://Scripts/Movement/States/WalkMid.gd" id="9_mmepo"]
+[ext_resource type="Script" path="res://Scripts/Movement/States/WalkFast.gd" id="10_4wgee"]
+[ext_resource type="Script" path="res://Scripts/Movement/States/WalkSun.gd" id="11_4geoh"]
+[ext_resource type="Script" path="res://Scripts/Movement/States/WalkMoon.gd" id="12_6tso0"]
+[ext_resource type="Script" path="res://Scripts/Movement/States/WalkCharged.gd" id="13_lhcxb"]
+[ext_resource type="Script" path="res://Entities/Characters/WalkSticky.gd" id="14_hakcu"]
+[ext_resource type="Script" path="res://Scripts/Movement/Metas/MetaTeeter.gd" id="14_xt5ok"]
+[ext_resource type="Script" path="res://Scripts/Movement/States/Teeter.gd" id="15_vsa85"]
+[ext_resource type="Script" path="res://Scripts/Movement/States/TeeterBack.gd" id="16_f41q4"]
+[ext_resource type="Script" path="res://Scripts/Movement/Metas/MetaDash.gd" id="17_4mecc"]
+[ext_resource type="Script" path="res://Scripts/Movement/States/Dash.gd" id="18_7jado"]
+[ext_resource type="Script" path="res://Scripts/Movement/States/Run.gd" id="19_xpomt"]
+[ext_resource type="Script" path="res://Scripts/Movement/Metas/MetaTurn.gd" id="20_losm0"]
+[ext_resource type="Script" path="res://Scripts/Movement/Metas/MetaFall.gd" id="22_4625x"]
+[ext_resource type="Script" path="res://Scripts/Movement/States/TurnTilt.gd" id="22_dnrr3"]
+[ext_resource type="Script" path="res://Scripts/Movement/States/Fall.gd" id="23_v6nm5"]
+[ext_resource type="Script" path="res://Scripts/Movement/Metas/MetaLanding.gd" id="24_2yeic"]
+[ext_resource type="Script" path="res://Scripts/Movement/States/Landing.gd" id="25_lbgg2"]
+[ext_resource type="Script" path="res://Scripts/Movement/Metas/MetaJump.gd" id="26_kcvl0"]
+[ext_resource type="Script" path="res://Scripts/Movement/Helpers/Mover.gd" id="29_i1mn7"]
+[ext_resource type="Script" path="res://Controllers/GamecubeContract.gd" id="30_ixhfc"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_d24qw"]
+
+[sub_resource type="GDScript" id="GDScript_ge8eb"]
+script/source = "extends MetaState
+"
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_f11te"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0mrs0"]
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="QuadMesh" id="QuadMesh_l68rf"]
+material = SubResource("StandardMaterial3D_0mrs0")
+size = Vector2(0.2, 0.2)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_203vp"]
+albedo_color = Color(0.2, 0.505882, 1, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_xa41k"]
+material = SubResource("StandardMaterial3D_203vp")
+radius = 0.2
+height = 0.4
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_lcmsa"]
+
+[node name="Capsule" type="CharacterBody3D"]
+script = ExtResource("1_vopft")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_d24qw")
+
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("starting_state")]
+script = ExtResource("2_wsp71")
+starting_state = NodePath("Idle")
+
+[node name="State" type="Node" parent="StateMachine"]
+script = ExtResource("3_ujxfg")
+state_name 

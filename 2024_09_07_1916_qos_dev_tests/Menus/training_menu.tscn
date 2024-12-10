@@ -1,0 +1,56 @@
+[gd_scene load_steps=2 format=3 uid="uid://bjg8ccspid1u1"]
+
+[ext_resource type="Script" path="res://Menus/training_menu.gd" id="1_a3srv"]
+
+[node name="TrainingMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_a3srv")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+custom_minimum_size = Vector2(200, 175)
+layout_mode = 0
+offset_left = 25.0
+offset_top = 25.0
+offset_right = 225.0
+offset_bottom = 200.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="OpenLab" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+focus_neighbor_top = NodePath("../PriorMenu")
+text = "Open Lab"
+alignment = 0
+
+[node name="Tutorials" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Tutorials - Coming Soon"
+alignment = 0
+
+[node name="Exercises" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Exercises - Coming Soon"
+alignment = 0
+
+[node name="Review" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Review - Coming Soon"
+alignment = 0
+
+[node name="PriorMenu" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+focus_neighbor_bottom = NodePath("../OpenLab")
+text = "↵ Prior Menu"
+alignment = 0
+
+[connection signal="pressed" from="MarginContainer/VBoxContainer/OpenLab" to="." method="_on_open_lab_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/Tutorials" to="." method="_on_tutorials_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/Exercises" to="." method="_on_exercises_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/Review" to="." method="_on_review_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/PriorMenu" to="." method="_on_prior_menu_pressed"]

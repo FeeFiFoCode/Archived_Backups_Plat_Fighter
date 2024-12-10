@@ -1,0 +1,107 @@
+[gd_scene load_steps=10 format=3 uid="uid://cf8eqb61kt4j0"]
+
+[ext_resource type="Script" path="res://Menus/character_menu.gd" id="1_6yfxd"]
+[ext_resource type="Texture2D" uid="uid://bamgv4ty11ywh" path="res://Images/Icons/Characters/bass.png" id="2_sksvf"]
+[ext_resource type="Texture2D" uid="uid://dh5g1svvaaak8" path="res://Images/Icons/Characters/aya.png" id="3_x2s06"]
+[ext_resource type="Texture2D" uid="uid://cmm7cb5mw5kit" path="res://Images/Icons/Characters/yena.png" id="4_1opbk"]
+[ext_resource type="Texture2D" uid="uid://hvmm3vimldde" path="res://Images/Icons/Characters/siraj1.png" id="5_ww7wl"]
+[ext_resource type="Texture2D" uid="uid://c73phf1g7ljoq" path="res://Images/Icons/Characters/artos.png" id="6_mi71n"]
+[ext_resource type="Texture2D" uid="uid://wt7cmfs50odk" path="res://Images/Icons/Characters/bailu2.png" id="7_ljovb"]
+[ext_resource type="Texture2D" uid="uid://bk3oqj2e6txky" path="res://Images/Icons/Characters/sentry1.png" id="8_u6v3x"]
+[ext_resource type="Texture2D" uid="uid://c1f4u1odhp8fk" path="res://Images/Icons/Characters/carrion2.png" id="9_rsoac"]
+
+[node name="CharacterMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_6yfxd")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="FlushLeft" type="VBoxContainer" parent="MarginContainer/HBoxContainer"]
+visible = false
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="CharacterUI" type="GridContainer" parent="MarginContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/h_separation = 15
+theme_override_constants/v_separation = 15
+columns = 4
+
+[node name="Bass" type="Button" parent="MarginContainer/HBoxContainer/VBoxContainer/CharacterUI"]
+layout_mode = 2
+text = "Bass ; All-Rounder"
+icon = ExtResource("2_sksvf")
+icon_alignment = 1
+vertical_icon_alignment = 0
+
+[node name="Aya" type="Button" parent="MarginContainer/HBoxContainer/VBoxContainer/CharacterUI"]
+layout_mode = 2
+text = "Aya ; Combo Zoner"
+icon = ExtResource("3_x2s06")
+icon_alignment = 1
+vertical_icon_alignment = 0
+
+[node name="Yena" type="Button" parent="MarginContainer/HBoxContainer/VBoxContainer/CharacterUI"]
+layout_mode = 2
+text = "Yena ; Desync Rushdown"
+icon = ExtResource("4_1opbk")
+icon_alignment = 1
+vertical_icon_alignment = 0
+
+[node name="Siraj" type="Button" parent="MarginContainer/HBoxContainer/VBoxContainer/CharacterUI"]
+layout_mode = 2
+text = "Siraj ; Resource Zoner-Trapper"
+icon = ExtResource("5_ww7wl")
+icon_alignment = 1
+vertical_icon_alignment = 0
+
+[node name="Artos" type="Button" parent="MarginContainer/HBoxContainer/VBoxContainer/CharacterUI"]
+layout_mode = 2
+text = "Artos ; Zoner-Grappler"
+icon = ExtResource("6_mi71n")
+icon_alignment = 1
+vertical_icon_alignment = 0
+
+[node name="Bailu" type="Button" parent="MarginContainer/HBoxContainer/VBoxContainer/CharacterUI"]
+layout_mode = 2
+text = "Bailu ; Schmovement Bruiser"
+icon = ExtResource("7_ljovb")
+icon_alignment = 1
+vertical_icon_alignment = 0
+
+[node name="Sentry" type="Button" parent="MarginContainer/HBoxContainer/VBoxContainer/CharacterUI"]
+layout_mode = 2
+text = "Sentry ; Portals & Projectiles"
+icon = ExtResource("8_u6v3x")
+icon_alignment = 1
+vertical_icon_alignment = 0
+
+[node name="A-Spawn" type="Button" parent="MarginContainer/HBoxContainer/VBoxContainer/CharacterUI"]
+layout_mode = 2
+text = "X-Spawn ; Disjointed Shapeshifter"
+icon = ExtResource("9_rsoac")
+icon_alignment = 1
+vertical_icon_alignment = 0
+
+[node name="PlayerUI" type="GridContainer" parent="MarginContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="FlushRight" type="VBoxContainer" parent="MarginContainer/HBoxContainer"]
+visible = false
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 2

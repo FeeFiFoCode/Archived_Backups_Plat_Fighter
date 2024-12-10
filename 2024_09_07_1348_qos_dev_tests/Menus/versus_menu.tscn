@@ -1,0 +1,56 @@
+[gd_scene load_steps=2 format=3 uid="uid://cd5d6r3wrwydt"]
+
+[ext_resource type="Script" path="res://Menus/versus_menu.gd" id="1_btf8c"]
+
+[node name="versus_menu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_btf8c")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+custom_minimum_size = Vector2(200, 150)
+layout_mode = 0
+offset_left = 25.0
+offset_top = 25.0
+offset_right = 225.0
+offset_bottom = 200.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="Battle" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+focus_neighbor_top = NodePath("../PriorMenu")
+text = "Vs. Battle - Coming Soon"
+alignment = 0
+
+[node name="Arena" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Arena - Coming Soon"
+alignment = 0
+
+[node name="Special" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Special - Coming Soon"
+alignment = 0
+
+[node name="Custom" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Custom - Coming Soon"
+alignment = 0
+
+[node name="PriorMenu" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+focus_neighbor_bottom = NodePath("../Battle")
+text = "↵ Prior Menu"
+alignment = 0
+
+[connection signal="pressed" from="MarginContainer/VBoxContainer/Battle" to="." method="_on_battle_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/Arena" to="." method="_on_arena_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/Special" to="." method="_on_special_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/Custom" to="." method="_on_custom_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/PriorMenu" to="." method="_on_prior_menu_pressed"]

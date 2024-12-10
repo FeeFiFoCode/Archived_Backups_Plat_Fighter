@@ -1,0 +1,138 @@
+[gd_scene load_steps=3 format=3 uid="uid://faqmh722nted"]
+
+[sub_resource type="Environment" id="Environment_ifqrk"]
+background_mode = 1
+background_color = Color(0.14902, 0.12549, 0.0352941, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.164706, 0.592157, 0.152941, 1)
+ambient_light_energy = 3.23
+reflected_light_source = 1
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_oiemd"]
+
+[node name="PressureSegway" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_ifqrk")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.00851856, -0.968208, 0.25, -0.0669873, 0.25, 0.965926, -0.997717, -0.00851855, -0.0669873, 0, 0, 0)
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.984808, 0.173648, 0, -0.173648, 0.984808, 0, 10, 50)
+
+[node name="StageStructure" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -50, 0)
+
+[node name="Floor" type="CSGBox3D" parent="StageStructure"]
+size = Vector3(50, 100, 50)
+
+[node name="Walls" type="Node3D" parent="StageStructure"]
+
+[node name="LeftWall" type="CSGBox3D" parent="StageStructure/Walls"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25, 0, 0)
+size = Vector3(2, 100, 50)
+
+[node name="RightWall" type="CSGBox3D" parent="StageStructure/Walls"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, 0, 0)
+size = Vector3(2, 100, 50)
+
+[node name="Ledges" type="Node3D" parent="StageStructure"]
+
+[node name="LeftLedge" type="CSGBox3D" parent="StageStructure/Ledges"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -23.5, 49, 0)
+size = Vector3(5, 2, 50)
+
+[node name="RightLedge" type="CSGBox3D" parent="StageStructure/Ledges"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.5, 49, 0)
+size = Vector3(5, 2, 50)
+
+[node name="HarmZones" type="Node3D" parent="StageStructure"]
+
+[node name="DamageZone" type="Node3D" parent="StageStructure/HarmZones"]
+
+[node name="Top" type="Area3D" parent="StageStructure/HarmZones/DamageZone"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StageStructure/HarmZones/DamageZone/Top"]
+shape = SubResource("BoxShape3D_oiemd")
+
+[node name="Left" type="Area3D" parent="StageStructure/HarmZones/DamageZone"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StageStructure/HarmZones/DamageZone/Left"]
+shape = SubResource("BoxShape3D_oiemd")
+
+[node name="Right" type="Area3D" parent="StageStructure/HarmZones/DamageZone"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StageStructure/HarmZones/DamageZone/Right"]
+shape = SubResource("BoxShape3D_oiemd")
+
+[node name="Bottom" type="Area3D" parent="StageStructure/HarmZones/DamageZone"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StageStructure/HarmZones/DamageZone/Bottom"]
+shape = SubResource("BoxShape3D_oiemd")
+
+[node name="BlastClose" type="Node3D" parent="StageStructure/HarmZones"]
+
+[node name="Top" type="Area3D" parent="StageStructure/HarmZones/BlastClose"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StageStructure/HarmZones/BlastClose/Top"]
+shape = SubResource("BoxShape3D_oiemd")
+
+[node name="Left" type="Area3D" parent="StageStructure/HarmZones/BlastClose"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StageStructure/HarmZones/BlastClose/Left"]
+shape = SubResource("BoxShape3D_oiemd")
+
+[node name="Right" type="Area3D" parent="StageStructure/HarmZones/BlastClose"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StageStructure/HarmZones/BlastClose/Right"]
+shape = SubResource("BoxShape3D_oiemd")
+
+[node name="Bottom" type="Area3D" parent="StageStructure/HarmZones/BlastClose"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StageStructure/HarmZones/BlastClose/Bottom"]
+shape = SubResource("BoxShape3D_oiemd")
+
+[node name="BlastMid" type="Node3D" parent="StageStructure/HarmZones"]
+
+[node name="Top" type="Area3D" parent="StageStructure/HarmZones/BlastMid"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StageStructure/HarmZones/BlastMid/Top"]
+shape = SubResource("BoxShape3D_oiemd")
+
+[node name="Left" type="Area3D" parent="StageStructure/HarmZones/BlastMid"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StageStructure/HarmZones/BlastMid/Left"]
+shape = SubResource("BoxShape3D_oiemd")
+
+[node name="Right" type="Area3D" parent="StageStructure/HarmZones/BlastMid"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StageStructure/HarmZones/BlastMid/Right"]
+shape = SubResource("BoxShape3D_oiemd")
+
+[node name="Bottom" type="Area3D" parent="StageStructure/HarmZones/BlastMid"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StageStructure/HarmZones/BlastMid/Bottom"]
+shape = SubResource("BoxShape3D_oiemd")
+
+[node name="BlastFar" type="Node3D" parent="StageStructure/HarmZones"]
+
+[node name="Top" type="Area3D" parent="StageStructure/HarmZones/BlastFar"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StageStructure/HarmZones/BlastFar/Top"]
+shape = SubResource("BoxShape3D_oiemd")
+
+[node name="Left" type="Area3D" parent="StageStructure/HarmZones/BlastFar"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StageStructure/HarmZones/BlastFar/Left"]
+shape = SubResource("BoxShape3D_oiemd")
+
+[node name="Right" type="Area3D" parent="StageStructure/HarmZones/BlastFar"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StageStructure/HarmZones/BlastFar/Right"]
+shape = SubResource("BoxShape3D_oiemd")
+
+[node name="Bottom" type="Area3D" parent="StageStructure/HarmZones/BlastFar"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StageStructure/HarmZones/BlastFar/Bottom"]
+shape = SubResource("BoxShape3D_oiemd")

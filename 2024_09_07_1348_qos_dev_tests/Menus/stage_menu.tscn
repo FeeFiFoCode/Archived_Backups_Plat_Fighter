@@ -1,0 +1,138 @@
+[gd_scene load_steps=6 format=3 uid="uid://c2dreoqnt816r"]
+
+[ext_resource type="Texture2D" uid="uid://b0xlo4bxchqrj" path="res://Images/Icons/Stages/the_pit_icon.png" id="1_bhvtc"]
+[ext_resource type="Script" path="res://Menus/stage_menu.gd" id="1_cvmve"]
+[ext_resource type="Texture2D" uid="uid://cynsyjivk42pw" path="res://Images/Icons/icon.svg" id="3_0e68p"]
+[ext_resource type="Texture2D" uid="uid://dy2ps5ccpjvq8" path="res://Images/Icons/Stages/final_desire_icon.png" id="3_rctqy"]
+[ext_resource type="Texture2D" uid="uid://lvnrgauo8aig" path="res://Images/Icons/Stages/pit_scs_profile_2.png" id="4_ahpkq"]
+
+[node name="StageMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_cvmve")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+custom_minimum_size = Vector2(200, 175)
+layout_mode = 0
+offset_left = 25.0
+offset_top = 25.0
+offset_right = 225.0
+offset_bottom = 200.0
+
+[node name="HSplitContainer" type="HSplitContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="IconHolder" type="VBoxContainer" parent="MarginContainer/HSplitContainer"]
+layout_mode = 2
+
+[node name="StagePrompt" type="Label" parent="MarginContainer/HSplitContainer/IconHolder"]
+layout_mode = 2
+text = "Select a Stage"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="GridContainer" type="GridContainer" parent="MarginContainer/HSplitContainer/IconHolder"]
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 2
+theme_override_constants/h_separation = 16
+theme_override_constants/v_separation = 16
+columns = 3
+
+[node name="ThePit" type="Button" parent="MarginContainer/HSplitContainer/IconHolder/GridContainer"]
+layout_mode = 2
+focus_neighbor_left = NodePath("../FinalDesire")
+focus_neighbor_top = NodePath("../PriorMenu")
+text = "The Pit"
+icon = ExtResource("1_bhvtc")
+icon_alignment = 1
+vertical_icon_alignment = 2
+
+[node name="BattleFarm" type="Button" parent="MarginContainer/HSplitContainer/IconHolder/GridContainer"]
+layout_mode = 2
+focus_neighbor_top = NodePath("../Sommersville")
+text = "Battle Farm"
+icon = ExtResource("3_0e68p")
+icon_alignment = 1
+vertical_icon_alignment = 2
+
+[node name="FinalDesire" type="Button" parent="MarginContainer/HSplitContainer/IconHolder/GridContainer"]
+layout_mode = 2
+focus_neighbor_top = NodePath("../Virtual Villa")
+focus_neighbor_right = NodePath("../ThePit")
+text = "Final Desire"
+icon = ExtResource("3_rctqy")
+icon_alignment = 1
+vertical_icon_alignment = 2
+
+[node name="Pressure Segway" type="Button" parent="MarginContainer/HSplitContainer/IconHolder/GridContainer"]
+layout_mode = 2
+focus_neighbor_left = NodePath("../Virtual Villa")
+focus_neighbor_bottom = NodePath("../PriorMenu")
+text = "Pressure
+Segway"
+icon = ExtResource("3_0e68p")
+icon_alignment = 1
+vertical_icon_alignment = 2
+
+[node name="Sommersville" type="Button" parent="MarginContainer/HSplitContainer/IconHolder/GridContainer"]
+layout_mode = 2
+focus_neighbor_bottom = NodePath("../BattleFarm")
+text = "Sommersville"
+icon = ExtResource("3_0e68p")
+icon_alignment = 1
+vertical_icon_alignment = 2
+
+[node name="Virtual Villa" type="Button" parent="MarginContainer/HSplitContainer/IconHolder/GridContainer"]
+layout_mode = 2
+focus_neighbor_right = NodePath("../Pressure Segway")
+focus_neighbor_bottom = NodePath("../FinalDesire")
+text = "Virtual Villa
+"
+icon = ExtResource("3_0e68p")
+icon_alignment = 1
+vertical_icon_alignment = 2
+
+[node name="PriorMenu" type="Button" parent="MarginContainer/HSplitContainer/IconHolder/GridContainer"]
+layout_mode = 2
+focus_neighbor_left = NodePath(".")
+focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath("../ThePit")
+text = "↵ Prior Menu"
+
+[node name="StageInformation" type="VBoxContainer" parent="MarginContainer/HSplitContainer"]
+layout_mode = 2
+
+[node name="StageName" type="Label" parent="MarginContainer/HSplitContainer/StageInformation"]
+layout_mode = 2
+text = "The Pit"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/HSplitContainer/StageInformation"]
+layout_mode = 2
+texture = ExtResource("4_ahpkq")
+
+[node name="StageStats" type="Label" parent="MarginContainer/HSplitContainer/StageInformation"]
+layout_mode = 2
+text = "Top: 100 | Side: 100 | Bottom: 100  | Width: 50"
+vertical_alignment = 1
+
+[node name="StageDescription" type="Label" parent="MarginContainer/HSplitContainer/StageInformation"]
+layout_mode = 2
+text = "
+The Pit is a stage.
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo."
+vertical_alignment = 1
+autowrap_mode = 1
+
+[connection signal="pressed" from="MarginContainer/HSplitContainer/IconHolder/GridContainer/ThePit" to="." method="_on_the_pit_pressed"]
+[connection signal="pressed" from="MarginContainer/HSplitContainer/IconHolder/GridContainer/BattleFarm" to="." method="_on_battle_farm_pressed"]
+[connection signal="pressed" from="MarginContainer/HSplitContainer/IconHolder/GridContainer/FinalDesire" to="." method="_on_final_desire_pressed"]
+[connection signal="pressed" from="MarginContainer/HSplitContainer/IconHolder/GridContainer/Pressure Segway" to="." method="_on_pressure_segway_pressed"]
+[connection signal="pressed" from="MarginContainer/HSplitContainer/IconHolder/GridContainer/Sommersville" to="." method="_on_sommersville_pressed"]
+[connection signal="pressed" from="MarginContainer/HSplitContainer/IconHolder/GridContainer/Virtual Villa" to="." method="_on_virtual_villa_pressed"]
+[connection signal="pressed" from="MarginContainer/HSplitContainer/IconHolder/GridContainer/PriorMenu" to="." method="_on_prior_menu_pressed"]

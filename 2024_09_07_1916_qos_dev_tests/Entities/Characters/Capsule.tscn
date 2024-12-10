@@ -1,0 +1,231 @@
+[gd_scene load_steps=40 format=3 uid="uid://cmgw4nva8ve7j"]
+
+[ext_resource type="Script" path="res://Entities/Characters/Capsule.gd" id="1_vopft"]
+[ext_resource type="Script" path="res://Entities/Characters/CapsuleStats.gd" id="2_7qv3g"]
+[ext_resource type="Script" path="res://Scripts/Movement/Helpers/StateMachine.gd" id="2_wsp71"]
+[ext_resource type="Script" path="res://Scripts/Movement/Helpers/State.gd" id="3_ujxfg"]
+[ext_resource type="Script" path="res://Scripts/Movement/States/Idle.gd" id="4_2mw8s"]
+[ext_resource type="Script" path="res://Scripts/Movement/States/JumpSquat.gd" id="5_ew7b7"]
+[ext_resource type="Script" path="res://Entities/Characters/Squat.gd" id="6_nbw4d"]
+[ext_resource type="Script" path="res://Scripts/Movement/Metas/MetaWalk.gd" id="6_vvanq"]
+[ext_resource type="Script" path="res://Scripts/Movement/States/WalkSlow.gd" id="8_7lsjf"]
+[ext_resource type="Script" path="res://Scripts/Movement/States/WalkBack.gd" id="8_pvl4m"]
+[ext_resource type="Script" path="res://Scripts/Movement/States/WalkMid.gd" id="9_mmepo"]
+[ext_resource type="Script" path="res://Scripts/Movement/States/WalkFast.gd" id="10_4wgee"]
+[ext_resource type="Script" path="res://Scripts/Movement/States/WalkSun.gd" id="11_4geoh"]
+[ext_resource type="Script" path="res://Scripts/Movement/States/WalkMoon.gd" id="12_6tso0"]
+[ext_resource type="Script" path="res://Scripts/Movement/States/WalkCharged.gd" id="13_lhcxb"]
+[ext_resource type="Script" path="res://Entities/Characters/WalkSticky.gd" id="14_hakcu"]
+[ext_resource type="Script" path="res://Scripts/Movement/Metas/MetaTeeter.gd" id="14_xt5ok"]
+[ext_resource type="Script" path="res://Scripts/Movement/States/Teeter.gd" id="15_vsa85"]
+[ext_resource type="Script" path="res://Scripts/Movement/States/TeeterBack.gd" id="16_f41q4"]
+[ext_resource type="Script" path="res://Scripts/Movement/Metas/MetaDash.gd" id="17_4mecc"]
+[ext_resource type="Script" path="res://Scripts/Movement/States/Dash.gd" id="18_7jado"]
+[ext_resource type="Script" path="res://Scripts/Movement/States/Run.gd" id="19_xpomt"]
+[ext_resource type="Script" path="res://Scripts/Movement/Metas/MetaTurn.gd" id="20_losm0"]
+[ext_resource type="Script" path="res://Scripts/Movement/Metas/MetaFall.gd" id="22_4625x"]
+[ext_resource type="Script" path="res://Scripts/Movement/States/TurnTilt.gd" id="22_dnrr3"]
+[ext_resource type="Script" path="res://Scripts/Movement/States/Fall.gd" id="23_v6nm5"]
+[ext_resource type="Script" path="res://Scripts/Movement/Metas/MetaLanding.gd" id="24_2yeic"]
+[ext_resource type="Script" path="res://Scripts/Movement/States/Landing.gd" id="25_lbgg2"]
+[ext_resource type="Script" path="res://Scripts/Movement/Metas/MetaJump.gd" id="26_kcvl0"]
+[ext_resource type="Script" path="res://Scripts/Movement/Helpers/Mover.gd" id="29_i1mn7"]
+[ext_resource type="Script" path="res://Controllers/GamecubeContract.gd" id="30_ixhfc"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_d24qw"]
+
+[sub_resource type="GDScript" id="GDScript_ge8eb"]
+script/source = "extends MetaState
+"
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_f11te"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0mrs0"]
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="QuadMesh" id="QuadMesh_l68rf"]
+material = SubResource("StandardMaterial3D_0mrs0")
+size = Vector2(0.2, 0.2)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_203vp"]
+albedo_color = Color(0.2, 0.505882, 1, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_xa41k"]
+material = SubResource("StandardMaterial3D_203vp")
+radius = 0.2
+height = 0.4
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_lcmsa"]
+
+[node name="Capsule" type="CharacterBody3D"]
+script = ExtResource("1_vopft")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_d24qw")
+
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("starting_state")]
+script = ExtResource("2_wsp71")
+starting_state = NodePath("Idle")
+
+[node name="State" type="Node" parent="StateMachine"]
+script = ExtResource("3_ujxfg")
+state_name = "State"
+
+[node name="Idle" type="Node" parent="StateMachine" node_paths=PackedStringArray("stateIdle", "stateFall", "stateWalkSlow", "stateWalkBack", "stateTurnTilt", "stateDash", "stateJumpSquat", "stateSquat")]
+script = ExtResource("4_2mw8s")
+stateIdle = NodePath(".")
+stateFall = NodePath("../MetaFall/Fall")
+stateWalkSlow = NodePath("../MetaWalk/WalkSlow")
+stateWalkBack = NodePath("../MetaWalk/WalkBack")
+stateTurnTilt = NodePath("../MetaTurn/TurnTilt")
+stateDash = NodePath("../MetaDash/Dash")
+stateJumpSquat = NodePath("../JumpSquat")
+stateSquat = NodePath("../Squat")
+state_name = "Idle"
+
+[node name="JumpSquat" type="Node" parent="StateMachine"]
+script = ExtResource("5_ew7b7")
+
+[node name="Squat" type="Node" parent="StateMachine"]
+script = ExtResource("6_nbw4d")
+
+[node name="MetaWalk" type="Node" parent="StateMachine"]
+script = ExtResource("6_vvanq")
+
+[node name="WalkBack" type="Node" parent="StateMachine/MetaWalk"]
+script = ExtResource("8_pvl4m")
+
+[node name="WalkSlow" type="Node" parent="StateMachine/MetaWalk"]
+script = ExtResource("8_7lsjf")
+
+[node name="WalkMid" type="Node" parent="StateMachine/MetaWalk"]
+script = ExtResource("9_mmepo")
+
+[node name="WalkFast" type="Node" parent="StateMachine/MetaWalk"]
+script = ExtResource("10_4wgee")
+state_name = "WalkFast"
+
+[node name="WalkSun" type="Node" parent="StateMachine/MetaWalk"]
+script = ExtResource("11_4geoh")
+
+[node name="WalkMoon" type="Node" parent="StateMachine/MetaWalk"]
+script = ExtResource("12_6tso0")
+
+[node name="WalkCharged" type="Node" parent="StateMachine/MetaWalk"]
+script = ExtResource("13_lhcxb")
+
+[node name="WalkSticky" type="Node" parent="StateMachine/MetaWalk"]
+script = ExtResource("14_hakcu")
+
+[node name="MetaTeeter" type="Node" parent="StateMachine"]
+script = ExtResource("14_xt5ok")
+
+[node name="Teeter" type="Node" parent="StateMachine/MetaTeeter" node_paths=PackedStringArray("stateIdle", "stateFall", "stateWalkSlow", "stateWalkBack")]
+script = ExtResource("15_vsa85")
+stateIdle = NodePath("../../Idle")
+stateFall = NodePath("../../MetaFall/Fall")
+stateWalkSlow = NodePath("../../MetaWalk/WalkSlow")
+stateWalkBack = NodePath("../../MetaWalk/WalkBack")
+state_name = "Teeter"
+
+[node name="TeeterBack" type="Node" parent="StateMachine/MetaTeeter" node_paths=PackedStringArray("stateIdle", "stateFall", "stateWalkSlow", "stateWalkBack")]
+script = ExtResource("16_f41q4")
+stateIdle = NodePath("../../Idle")
+stateFall = NodePath("../../MetaFall/Fall")
+stateWalkSlow = NodePath("../../MetaWalk/WalkSlow")
+stateWalkBack = NodePath("../../MetaWalk/WalkBack")
+state_name = "TeeterBack"
+
+[node name="MetaDash" type="Node" parent="StateMachine"]
+script = ExtResource("17_4mecc")
+
+[node name="Dash" type="Node" parent="StateMachine/MetaDash" node_paths=PackedStringArray("stateIdle", "stateWalkSlow", "stateWalkBack", "stateDash", "stateTurnTilt", "stateFall", "stateRun", "stateSquat", "stateJumpSquat")]
+script = ExtResource("18_7jado")
+stateIdle = NodePath("../../Idle")
+stateWalkSlow = NodePath("../../MetaWalk/WalkSlow")
+stateWalkBack = NodePath("../../MetaWalk/WalkBack")
+stateDash = NodePath(".")
+stateTurnTilt = NodePath("../../MetaTurn/TurnTilt")
+stateFall = NodePath("../../MetaFall/Fall")
+stateRun = NodePath("../../MetaRun/Run")
+stateSquat = NodePath("../../Squat")
+stateJumpSquat = NodePath("../../JumpSquat")
+
+[node name="MetaRun" type="Node" parent="StateMachine"]
+script = SubResource("GDScript_ge8eb")
+
+[node name="Run" type="Node" parent="StateMachine/MetaRun"]
+script = ExtResource("19_xpomt")
+
+[node name="MetaTurn" type="Node" parent="StateMachine"]
+script = ExtResource("20_losm0")
+
+[node name="TurnTilt" type="Node" parent="StateMachine/MetaTurn" node_paths=PackedStringArray("stateIdle")]
+script = ExtResource("22_dnrr3")
+stateIdle = NodePath("../../Idle")
+
+[node name="MetaFall" type="Node" parent="StateMachine"]
+script = ExtResource("22_4625x")
+
+[node name="Fall" type="Node" parent="StateMachine/MetaFall" node_paths=PackedStringArray("stateFall", "stateLand")]
+script = ExtResource("23_v6nm5")
+stateFall = NodePath(".")
+stateLand = NodePath("../../MetaLanding/Landing")
+state_name = "Fall"
+
+[node name="MetaLanding" type="Node" parent="StateMachine"]
+script = ExtResource("24_2yeic")
+
+[node name="Landing" type="Node" parent="StateMachine/MetaLanding" node_paths=PackedStringArray("stateIdle", "stateFall", "stateWalkBack", "stateWalkSlow", "stateTurnTilt", "stateDash")]
+script = ExtResource("25_lbgg2")
+stateIdle = NodePath("../../Idle")
+stateFall = NodePath("../../MetaFall/Fall")
+stateWalkBack = NodePath("../../MetaWalk/WalkBack")
+stateWalkSlow = NodePath("../../MetaWalk/WalkSlow")
+stateTurnTilt = NodePath("../../MetaTurn/TurnTilt")
+stateDash = NodePath("../../MetaDash/Dash")
+state_name = "Landing"
+
+[node name="MetaJump" type="Node" parent="StateMachine"]
+script = ExtResource("26_kcvl0")
+
+[node name="Stats" type="Node" parent="."]
+script = ExtResource("2_7qv3g")
+
+[node name="InputContract" type="Node" parent="."]
+script = ExtResource("30_ixhfc")
+
+[node name="Mover" type="Node" parent="."]
+script = ExtResource("29_i1mn7")
+
+[node name="Particles" type="Node3D" parent="."]
+
+[node name="Per_1_Fr" type="GPUParticles3D" parent="Particles"]
+amount = 15
+lifetime = 0.25
+fixed_fps = 60
+process_material = SubResource("ParticleProcessMaterial_f11te")
+draw_pass_1 = SubResource("QuadMesh_l68rf")
+
+[node name="Per_5_Fr" type="GPUParticles3D" parent="Particles"]
+amount = 5
+lifetime = 0.5
+fixed_fps = 60
+process_material = SubResource("ParticleProcessMaterial_f11te")
+draw_pass_1 = SubResource("QuadMesh_l68rf")
+
+[node name="Per_30_Fr" type="GPUParticles3D" parent="Particles"]
+amount = 1
+lifetime = 0.5
+fixed_fps = 60
+process_material = SubResource("ParticleProcessMaterial_f11te")
+draw_pass_1 = SubResource("SphereMesh_xa41k")
+
+[node name="Model" type="Node3D" parent="."]
+
+[node name="CSGSphere3D" type="CSGSphere3D" parent="Model"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.221349, 0.441078, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Model"]
+mesh = SubResource("CapsuleMesh_lcmsa")
+skeleton = NodePath("../..")

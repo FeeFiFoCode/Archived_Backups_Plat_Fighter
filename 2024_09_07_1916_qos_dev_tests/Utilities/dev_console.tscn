@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://uftvxp71kvfk"]
+
+[node name="dev_console" type="CanvasLayer"]
+
+[node name="container" type="TextEdit" parent="."]
+offset_right = 8.0
+offset_bottom = 8.0
+
+[node name="background" type="ColorRect" parent="container"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="contents" type="VBoxContainer" parent="container"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="console" type="RichTextLabel" parent="container/contents"]
+layout_mode = 2
+
+[node name="text_input" type="LineEdit" parent="container/contents"]
+layout_mode = 2

@@ -1,0 +1,151 @@
+[gd_scene load_steps=22 format=3 uid="uid://bg7yl27tigclf"]
+
+[ext_resource type="Script" path="res://scenes/characters/player_v3.gd" id="1_1fo4y"]
+[ext_resource type="Script" path="res://_state_machine.gd" id="2_c778f"]
+[ext_resource type="Script" path="res://scripts/_state_logic_v3/_state.gd" id="3_0rjud"]
+[ext_resource type="Script" path="res://scripts/_state_logic_v3/_grounded/_idle.gd" id="4_voonu"]
+[ext_resource type="Script" path="res://scenes/characters/_walkSlow.gd" id="5_lq8sn"]
+[ext_resource type="Script" path="res://_tiltTurn.gd" id="5_n3s0i"]
+[ext_resource type="Script" path="res://_walkMid.gd" id="6_bcf87"]
+[ext_resource type="Script" path="res://_dash.gd" id="7_di7lc"]
+[ext_resource type="Script" path="res://_dashBack.gd" id="8_wr8r6"]
+[ext_resource type="Script" path="res://_squat.gd" id="9_6oj2y"]
+[ext_resource type="Script" path="res://scenes/ParamActive.gd" id="15_iqmxd"]
+[ext_resource type="Script" path="res://scenes/ParamDefault.gd" id="16_jtj4j"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_l3dsf"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2si8s"]
+shading_mode = 0
+diffuse_mode = 3
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_pnyp6"]
+lightmap_size_hint = Vector2i(17, 14)
+material = SubResource("StandardMaterial3D_2si8s")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_6pj4y"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_46vud"]
+albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="QuadMesh" id="QuadMesh_qyp47"]
+material = SubResource("StandardMaterial3D_46vud")
+size = Vector2(0.1, 0.1)
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ghny3"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_u6lp3"]
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="QuadMesh" id="QuadMesh_kdhls"]
+material = SubResource("StandardMaterial3D_u6lp3")
+size = Vector2(0.2, 0.2)
+
+[node name="Player" type="CharacterBody3D"]
+script = ExtResource("1_1fo4y")
+
+[node name="Body" type="Node3D" parent="."]
+
+[node name="Head" type="CSGBox3D" parent="Body"]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0.25, 0.75, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Body"]
+shape = SubResource("CapsuleShape3D_l3dsf")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Body"]
+mesh = SubResource("CapsuleMesh_pnyp6")
+skeleton = NodePath("../..")
+
+[node name="ParticleHolder" type="Node3D" parent="."]
+
+[node name="GPUParticles3D_per_frame" type="GPUParticles3D" parent="ParticleHolder"]
+amount = 15
+lifetime = 0.25
+fixed_fps = 60
+process_material = SubResource("ParticleProcessMaterial_6pj4y")
+draw_pass_1 = SubResource("QuadMesh_qyp47")
+
+[node name="GPUParticles3D_per_5frame" type="GPUParticles3D" parent="ParticleHolder"]
+amount = 5
+lifetime = 0.5
+fixed_fps = 60
+process_material = SubResource("ParticleProcessMaterial_ghny3")
+draw_pass_1 = SubResource("QuadMesh_kdhls")
+
+[node name="Paramaters" type="Node" parent="."]
+
+[node name="Active" type="Node" parent="Paramaters"]
+script = ExtResource("15_iqmxd")
+
+[node name="Default" type="Node" parent="Paramaters"]
+script = ExtResource("16_jtj4j")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.965926, 0.258819, 0, -0.258819, 0.965926, 0, 2, 8.18219)
+
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("starting_state")]
+script = ExtResource("2_c778f")
+starting_state = NodePath("_Idle")
+
+[node name="_State" type="Node" parent="StateMachine"]
+script = ExtResource("3_0rjud")
+
+[node name="_Idle" type="Node" parent="StateMachine" node_paths=PackedStringArray("stateIdle", "stateWalkSlow", "stateTiltTurn", "stateSquat", "stateDash", "stateDashBack")]
+script = ExtResource("4_voonu")
+stateIdle = NodePath(".")
+stateWalkSlow = NodePath("../_WalkSlow")
+stateTiltTurn = NodePath("../_TiltTurn")
+stateSquat = NodePath("../_Squat")
+stateDash = NodePath("../_Dash")
+stateDashBack = NodePath("../_DashBack")
+
+[node name="_TiltTurn" type="Node" parent="StateMachine" node_paths=PackedStringArray("stateIdle", "stateWalkSlow", "stateTiltTurn", "stateSquat")]
+script = ExtResource("5_n3s0i")
+stateIdle = NodePath("../_Idle")
+stateWalkSlow = NodePath("../_WalkSlow")
+stateTiltTurn = NodePath(".")
+stateSquat = NodePath("../_Squat")
+
+[node name="_WalkSlow" type="Node" parent="StateMachine" node_paths=PackedStringArray("stateIdle", "stateWalkSlow", "stateWalkMid", "stateWalkFast", "stateTiltTurn", "stateSquat")]
+script = ExtResource("5_lq8sn")
+stateIdle = NodePath("../_Idle")
+stateWalkSlow = NodePath(".")
+stateWalkMid = NodePath("../_WalkMid")
+stateWalkFast = NodePath("../_WalkFast")
+stateTiltTurn = NodePath("../_TiltTurn")
+stateSquat = NodePath("../_Squat")
+
+[node name="_Dash" type="Node" parent="StateMachine" node_paths=PackedStringArray("stateIdle", "stateWalkSlow", "stateWalkMid", "stateWalkFast", "stateTiltTurn", "stateDash", "stateDashBack", "stateSquat")]
+script = ExtResource("7_di7lc")
+stateIdle = NodePath("../_Idle")
+stateWalkSlow = NodePath("../_WalkSlow")
+stateWalkMid = NodePath("../_WalkMid")
+stateWalkFast = NodePath("../_WalkFast")
+stateTiltTurn = NodePath("../_TiltTurn")
+stateDash = NodePath(".")
+stateDashBack = NodePath("../_DashBack")
+stateSquat = NodePath("../_Squat")
+
+[node name="_DashBack" type="Node" parent="StateMachine" node_paths=PackedStringArray("stateIdle", "stateDashBack")]
+script = ExtResource("8_wr8r6")
+stateIdle = NodePath("../_Idle")
+stateDashBack = NodePath(".")
+
+[node name="_WalkMid" type="Node" parent="StateMachine" node_paths=PackedStringArray("stateIdle", "stateWalkSlow", "stateWalkMid", "stateWalkFast", "stateTiltTurn", "stateSquat")]
+script = ExtResource("6_bcf87")
+stateIdle = NodePath("../_Idle")
+stateWalkSlow = NodePath("../_WalkSlow")
+stateWalkMid = NodePath(".")
+stateWalkFast = NodePath("../_WalkFast")
+stateTiltTurn = NodePath(".")
+stateSquat = NodePath("../_Squat")
+
+[node name="_WalkFast" type="Node" parent="StateMachine"]
+script = ExtResource("2_c778f")
+
+[node name="_Squat" type="Node" parent="StateMachine" node_paths=PackedStringArray("stateIdle", "stateWalkSlow", "stateTiltTurn", "stateSquat")]
+script = ExtResource("9_6oj2y")
+stateIdle = NodePath("../_Idle")
+stateWalkSlow = NodePath("../_WalkSlow")
+stateTiltTurn = NodePath("../_TiltTurn")
+stateSquat = NodePath(".")

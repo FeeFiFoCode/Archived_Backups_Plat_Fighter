@@ -1,0 +1,87 @@
+[gd_scene load_steps=29 format=3 uid="uid://cmgw4nva8ve7j"]
+
+[ext_resource type="Script" path="res://Entities/Characters/Capsule.gd" id="1_vopft"]
+[ext_resource type="Script" path="res://Entities/Characters/CapsuleStats.gd" id="2_7qv3g"]
+[ext_resource type="Script" path="res://Entities/Characters/StateMachine.gd" id="2_c04m2"]
+[ext_resource type="Script" path="res://Entities/Characters/State.gd" id="3_s6pf3"]
+[ext_resource type="Script" path="res://Idle.gd" id="4_5a65u"]
+[ext_resource type="Script" path="res://Entities/Characters/Fall.gd" id="5_lyl48"]
+[ext_resource type="Script" path="res://TurnTilt.gd" id="5_tyyg6"]
+[ext_resource type="Script" path="res://Entities/Characters/Landing.gd" id="6_u4wrq"]
+[ext_resource type="Script" path="res://Teeter.gd" id="7_egoca"]
+[ext_resource type="Script" path="res://WalkBackSlow.gd" id="8_0qj7m"]
+[ext_resource type="Script" path="res://Test.gd" id="8_q1m63"]
+[ext_resource type="Script" path="res://WalkMid.gd" id="8_r50lp"]
+[ext_resource type="Script" path="res://WalkSlow.gd" id="9_dwjfm"]
+[ext_resource type="Script" path="res://Entities/Characters/WalkTest.gd" id="9_e3won"]
+[ext_resource type="Script" path="res://WalkFast.gd" id="9_ogyvg"]
+[ext_resource type="Script" path="res://Entities/Characters/TeeterBack.gd" id="10_kegco"]
+[ext_resource type="Script" path="res://Entities/Characters/Dash.gd" id="11_7jg0n"]
+[ext_resource type="Script" path="res://Entities/Characters/Run.gd" id="12_esg4q"]
+[ext_resource type="Script" path="res://Controllers/KeyboardContract.gd" id="12_txly6"]
+[ext_resource type="Script" path="res://Entities/Characters/Mover.gd" id="13_wn75r"]
+[ext_resource type="Script" path="res://Entities/Characters/JumpSquat.gd" id="16_l35u5"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_d24qw"]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_f11te"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0mrs0"]
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="QuadMesh" id="QuadMesh_l68rf"]
+material = SubResource("StandardMaterial3D_0mrs0")
+size = Vector2(0.2, 0.2)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_203vp"]
+albedo_color = Color(0.2, 0.505882, 1, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_xa41k"]
+material = SubResource("StandardMaterial3D_203vp")
+radius = 0.2
+height = 0.4
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_lcmsa"]
+
+[node name="Capsule" type="CharacterBody3D"]
+script = ExtResource("1_vopft")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_d24qw")
+
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("starting_state")]
+script = ExtResource("2_c04m2")
+starting_state = NodePath("Idle")
+
+[node name="State" type="Node" parent="StateMachine"]
+script = ExtResource("3_s6pf3")
+state_name = "State"
+
+[node name="Idle" type="Node" parent="StateMachine" node_paths=PackedStringArray("stateIdle", "stateFall", "stateWalkSlow", "stateWalkBack", "stateTurnTilt", "stateDash")]
+script = ExtResource("4_5a65u")
+stateIdle = NodePath(".")
+stateFall = NodePath("../Fall")
+stateWalkSlow = NodePath("../MetaWalk/WalkSlow")
+stateWalkBack = NodePath("../WalkBack")
+stateTurnTilt = NodePath("../TurnTilt")
+stateDash = NodePath("../Dash")
+state_name = "Idle"
+
+[node name="TurnTilt" type="Node" parent="StateMachine" node_paths=PackedStringArray("stateIdle")]
+script = ExtResource("5_tyyg6")
+stateIdle = NodePath("../Idle")
+
+[node name="Fall" type="Node" parent="StateMachine" node_paths=PackedStringArray("stateFall", "stateLand")]
+script = ExtResource("5_lyl48")
+stateFall = NodePath(".")
+stateLand = NodePath("../Landing")
+state_name = "Fall"
+
+[node name="Landing" type="Node" parent="StateMachine" node_paths=PackedStringArray("stateIdle", "stateFall", "stateWalkBack", "stateWalkSlow", "stateTurnTilt", "stateDash")]
+script = ExtResource("6_u4wrq")
+stateIdle = NodePath("../Idle")
+stateFall = NodePath("../Fall")
+stateWalkBack = NodePath("../WalkBack")
+stateWalkSlow = NodePath("../MetaWalk/WalkSlow")
+stateTurnTilt = NodePath("../TurnTilt")
+sta
